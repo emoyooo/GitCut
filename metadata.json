@@ -1,0 +1,6 @@
+{
+  "name": "GitCut",
+  "description": "An end-to-end AI system that clones, indexes, and mentors you on any GitHub repository using RAG and agentic orchestration.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
