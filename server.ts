@@ -14,7 +14,7 @@ import { indexRepo, chat, getRepoFiles, getRepoStructure } from "./backend/contr
 async function startServer() {
   console.log("Starting server function...");
   const app = express();
-  const PORT = 3000;
+  const PORT = process.env.PORT || 3000;
 
   // Simple health check for the platform proxy
   app.get("/health", (req, res) => res.status(200).send("OK"));
