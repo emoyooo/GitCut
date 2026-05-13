@@ -1,11 +1,16 @@
 import { createClient, SupabaseClient } from "@supabase/supabase-js";
+import ws from "ws";
 import { CodeChunk, Repository, SearchResult } from "../types/index.ts";
 
 export class VectorStoreService {
   private client: SupabaseClient;
 
   constructor(url: string, key: string) {
-    this.client = createClient(url, key);
+    this.client = createClient(url, key, {
+      realtime: {
+        transport: ws,
+      },
+    });
   }
 
   async createRepository(repo: Omit<Repository, "id" | "lastIndexedAt">): Promise<Repository> {
