@@ -112,12 +112,12 @@ export default function App() {
     e.preventDefault();
     if (!question || !repoId || isLoading) return;
     
-    // If paths are selected, pass them. Otherwise passing undefined = full search.
-    const pathsToInclude = selectedPaths.length > 0 
-      ? files.filter(f => selectedPaths.some(sp => f.startsWith(sp)))
+    // Expand folders to files for database search
+    const expandedFiles = selectedPaths.length > 0 
+      ? files.filter(f => selectedPaths.some(sp => f === sp || f.startsWith(sp + "/")))
       : undefined;
 
-    sendMessage(question, repoId, pathsToInclude);
+    sendMessage(question, repoId, expandedFiles, selectedPaths);
     setQuestion("");
   };
 

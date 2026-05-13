@@ -4,7 +4,7 @@ export function useChat() {
   const [messages, setMessages] = useState<{ role: "user" | "assistant"; content: string }[]>([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const sendMessage = useCallback(async (question: string, repoId: string, selectedPaths?: string[]) => {
+  const sendMessage = useCallback(async (question: string, repoId: string, filePaths?: string[], selection?: string[]) => {
     setIsLoading(true);
     setMessages((prev) => [...prev, { role: "user", content: question }]);
 
@@ -15,7 +15,7 @@ export function useChat() {
       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question, repoId, selectedPaths }),
+        body: JSON.stringify({ question, repoId, filePaths, selection }),
       });
 
       if (!response.body) throw new Error("No response body");

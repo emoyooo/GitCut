@@ -129,7 +129,7 @@ export const getRepoFiles = async (req: Request, res: Response) => {
 
 export const chat = async (req: Request, res: Response) => {
   try {
-    const { question, repoId, selectedPaths } = req.body;
+    const { question, repoId, filePaths, selection } = req.body;
     if (!question || !repoId) {
       return res.status(400).json({ error: "question and repoId are required" });
     }
@@ -141,7 +141,7 @@ export const chat = async (req: Request, res: Response) => {
     res.setHeader("Cache-Control", "no-cache");
     res.setHeader("Connection", "keep-alive");
 
-    const stream = agent.ask(repoId, question, selectedPaths);
+    const stream = agent.ask(repoId, question, filePaths, selection);
 
     for await (const chunk of stream) {
       res.write(`data: ${JSON.stringify({ content: chunk })}\n\n`);
